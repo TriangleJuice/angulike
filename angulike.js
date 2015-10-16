@@ -1,5 +1,5 @@
 ﻿/**
- * AngularJS directives for social sharing buttons - Facebook Like, Google+, Twitter and Pinterest 
+ * AngularJS directives for social sharing buttons - Facebook Like, Google+, Twitter and Pinterest
  * @author Jason Watmore <jason@pointblankdevelopment.com.au> (http://jasonwatmore.com)
  * @version 1.2.0
  */
@@ -36,15 +36,16 @@
                               var unbindWatch = scope.$watch('fbLike', function (newValue, oldValue) {
                                   if (newValue) {
                                       renderLikeButton();
-                                      
+
                                       // only need to run once
                                       unbindWatch();
                                   }
-                                  
+
                               });
                               return;
                           } else {
-                              element.html('<div class="fb-like"' + (!!scope.fbLike ? ' data-href="' + scope.fbLike + '"' : '') + ' data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>');
+                              element.html('<div class="fb-share-button"' + (!!scope.fbLike ? ' data-href="' + scope.fbLike + '"' : '') + 'data-layout="button_count"></div>');
+                              // element.html('<div class="fb-like"' + (!!scope.fbLike ? ' data-href="' + scope.fbLike + '"' : '') + ' data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>');
                               $window.FB.XFBML.parse(element.parent()[0]);
                           }
                       }
@@ -102,7 +103,8 @@
                   restrict: 'A',
                   scope: {
                       tweet: '=',
-                      tweetUrl: '='
+                      tweetUrl: '=',
+                      tweetCount: '='
                   },
                   link: function (scope, element, attrs) {
                       if (!$window.twttr) {
@@ -122,14 +124,14 @@
                               var unbindWatch = scope.$watch('tweet', function (newValue, oldValue) {
                                   if (newValue) {
                                       renderTweetButton();
-                                  
+
                                       // only need to run once
                                       unbindWatch();
                                   }
                               });
                               return;
                           } else {
-                              element.html('<a href="https://twitter.com/share" class="twitter-share-button" data-text="' + scope.tweet + '" data-url="' + (scope.tweetUrl || $location.absUrl()) + '">Tweet</a>');
+                              element.html('<a href="https://twitter.com/share" class="twitter-share-button" data-text="' + scope.tweet + '" data-url="' + (scope.tweetUrl || $location.absUrl()) + '" data-count="' + (scope.tweetCount || 'horizontal') + '">Tweet</a>');
                               $window.twttr.widgets.load(element.parent()[0]);
                           }
                       }
@@ -178,7 +180,7 @@
                               var unbindWatch = scope.$watch('pinIt', function (newValue, oldValue) {
                                   if (newValue) {
                                       renderPinItButton();
-                                      
+
                                       // only need to run once
                                       unbindWatch();
                                   }
